@@ -145,7 +145,7 @@ export const allReels = async (req, res) => {
     const allReels = await Reel.find({}).populate(
       "author",
       "name username profilePicture",
-    );
+    ).populate('comments.author',"name username profilePicture");
 
     return res.status(200).json(allReels);
   } catch (error) {
