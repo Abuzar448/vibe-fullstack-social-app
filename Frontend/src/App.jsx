@@ -14,6 +14,7 @@ import EditProfile from './pages/EditProfile.jsx';
 import Upload from './pages/Upload.jsx';
 import Reel from './pages/Reel.jsx';
 import getAllReels from './Hooks/getAllReels.jsx';
+import Story from './pages/Story.jsx';
 
 const App = () => {
 
@@ -32,6 +33,7 @@ const App = () => {
       <Route path='/forgot-password' element={!userData ? <ForgotPassword/> : <Navigate to='/'/>}/>
       <Route path='/' element = {userData ? <Home/> : <Navigate to='/signin'/>}/>
       <Route path='/profile/:username' element = {userData ? <Profile/> : <Navigate to='/signin'/>}/>
+      <Route path='/story/:username' element = {userData ? <Story/> : <Navigate to='/signin'/>}/>
       <Route path='/upload' element = {userData ? <Upload/> : <Navigate to='/signin'/>}/>
       <Route path='/edit-profile' element = {userData ? <EditProfile/> : <Navigate to='/signin'/>}/>
       <Route path='/reels' element = {userData ? <Reel/> : <Navigate to='/signin'/>}/>

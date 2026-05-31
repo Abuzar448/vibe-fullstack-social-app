@@ -12,6 +12,7 @@ import { RiBookmarkLine } from "react-icons/ri";
 import { RiBookmarkFill } from "react-icons/ri";
 import { setLoopData } from "../redux/loopSlice";
 import { IoSendSharp } from "react-icons/io5";
+import { IoCloseSharp } from "react-icons/io5";
 import axios from "axios";
 
 const ReelCard = ({ loop, idx }) => {
@@ -24,7 +25,6 @@ const ReelCard = ({ loop, idx }) => {
   const [showComments, setShowComments] = useState(false);
   const [message, setMessage] = useState();
   const [showHeart, setShowHeart] = useState(false);
-
   const { userData } = useSelector((state) => state.user);
   const { loopData } = useSelector((state) => state.loop);
 
@@ -221,29 +221,25 @@ const ReelCard = ({ loop, idx }) => {
             </div>
             <div>{loop.comments?.length}</div>
           </div>
-          <div className="flex flex-col items-center cursor-pointer">
-            <div>
-              {userData?.saved?.includes(loop?._id) ? (
-                <RiBookmarkFill size={20} className="cursor-pointer" />
-              ) : (
-                <RiBookmarkLine size={20} className="cursor-pointer" />
-              )}
-            </div>
-            <div></div>
-          </div>
         </div>
       </div>
 
       {showComments && (
         <div
           style={{ animation: 'slideUpCommentsPanel 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards' }}
-          className="absolute bottom-0 left-0 w-full bg-gray-900 border-t border-gray-700 rounded-t-2xl p-[20px] h-[60vh] flex flex-col z-50 shadow-2xl overflow-hidden"
+          className="absolute bottom-0 left-0 w-full bg-gray-900 border-t border-gray-700 rounded-t-2xl p-[10px] h-[80vh] flex flex-col z-50 shadow-2xl overflow-hidden"
         >
+          <div
+              className="absolute top-2 left-2 flex items-center justify-center cursor-pointer py-2 sticky top-0 bg-gray-900 z-10 text-gray-400 hover:text-white transition-colors"
+              onClick={() => setShowComments(false)}
+            >
+              <IoCloseSharp size={40} className="font-bold text-left"/>
+            </div>
           {/* Comment Input Section (Fixed Top) */}
-          <div className="flex w-full justify-between h-[60px] items-center px-[10px] sm:px-[20px] shrink-0 border-b border-gray-800">
+          <div className="flex w-full justify-between h-[60px] items-center px-[10px] sm:px-[20px] shrink-0 border-t border-gray-800 absolute fixed bottom-2 left-0 right-0 py-[40px]">
             <div className="w-[35px] h-[35px] md:w-[45px] md:h-[45px] rounded-full border border-gray-600 cursor-pointer overflow-hidden shrink-0">
               <img
-                src={loop.author?.profilePicture || dp}
+                src={userData?.profilePicture || dp}
                 alt="User avatar"
                 className="w-full h-full object-cover"
               />
@@ -259,19 +255,14 @@ const ReelCard = ({ loop, idx }) => {
               onClick={handleComment}
               className="text-blue-500 hover:text-blue-400 transition-colors"
             >
-              <IoSendSharp size={22} className="cursor-pointer" />
+             {message && <IoSendSharp size={22} className="cursor-pointer" />} 
             </button>
+            
           </div>
 
-          {/* Close Button & Scrollable Comments Area */}
-          <div className="w-full flex-1 flex flex-col overflow-y-auto mt-2 px-[10px] sm:px-[20px] custom-scrollbar">
-            <div
-              className="flex items-center justify-center cursor-pointer py-2 sticky top-0 bg-gray-900 z-10 text-gray-400 hover:text-white transition-colors"
-              onClick={() => setShowComments(false)}
-            >
-              <GoFoldDown size={30} />
-            </div>
-
+          
+          <div className="w-full flex-1 flex flex-col overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden mt-2 px-[10px] sm:px-[20px] custom-scrollbar mb-16">
+            <h1 className="font-semibold text-2xl text-white text-center m-5">Comments</h1>
             <div className="flex flex-col gap-4 pb-4">
               {loop?.comments?.length > 0 ? (
                 loop.comments
