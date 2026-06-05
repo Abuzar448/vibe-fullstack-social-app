@@ -9,6 +9,7 @@ import Post from "./Post";
 const Feed = () => {
   const { postData } = useSelector((state) => state.post);
   const { userData } = useSelector((state) => state.user);
+  const { storyList } = useSelector((state) => state.story);
   return (
     <div className="lg:w-[50%] w-full bg-black min-h-[100vh] lg:h-[100vh] relative lg:overflow-y-auto overflow-y-scroll [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
       <div className="flex justify-between w-full h-[100px] items-center p-[20px] lg:hidden">
@@ -23,6 +24,15 @@ const Feed = () => {
           profilePicture={userData?.profilePicture}
           story={userData?.story}
         ></StoryCard>
+        {storyList.map((story,idx)=>(
+          <StoryCard
+          username={story?.author?.username}
+          profilePicture={story?.author?.profilePicture}
+          story={story}
+          key={idx}
+        ></StoryCard>
+        ))}
+
       </div>
       <div className="w-full min-h-[100vh] flex flex-col items-center gap-[20px] p-[10px] pt-[40px] bg-white rounded-t-[70px] relative pb-[120px]">
         <Navbar></Navbar>

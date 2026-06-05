@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPostData } from "../redux/postSlice.js";
 import { setStoryData } from "../redux/storySlice.js";
 import { setLoopData } from "../redux/loopSlice.js";
+import { setUserData } from "../redux/userSlice.js";
 
 
 function Upload() {
@@ -73,7 +74,7 @@ function Upload() {
         formData,
         { withCredentials: true },
       );
-      dispatch(setStoryData([...storyData,result.data]));
+      setUserData((prev)=>({...prev,story:result.data}));
       console.log(result.data);
       setLoading(false);
       navigate("/");

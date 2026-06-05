@@ -15,6 +15,7 @@ import Upload from './pages/Upload.jsx';
 import Reel from './pages/Reel.jsx';
 import getAllReels from './Hooks/getAllReels.jsx';
 import Story from './pages/Story.jsx';
+import getAllStories from './Hooks/getAllStories.jsx';
 
 const App = () => {
 
@@ -22,6 +23,7 @@ const App = () => {
   getSuggestedUsers();
   getAllPosts();
   getAllReels();
+  getAllStories();
 
   const {userData} = useSelector((state)=>state.user);
 

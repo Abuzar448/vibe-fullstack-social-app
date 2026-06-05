@@ -12,8 +12,11 @@ const StoryCard = ({ profilePicture, username, story }) => {
     if(!story && username=='Your Story'){
       navigate('/upload')
     }
-    else{
+    else if(story && username=='Your Story'){
       navigate(`/story/${userData?.username}`)
+    }
+    else if(story && username!=='Your Story'){
+      navigate(`/story/${username}`)
     }
   }
   return (
