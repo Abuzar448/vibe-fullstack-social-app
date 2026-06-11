@@ -8,6 +8,7 @@ import userRoutes from './routes/user.route.js';
 import postRouter from './routes/post.route.js';
 import reelRouter from './routes/reel.route.js';
 import storyRouter from './routes/story.routes.js';
+import messageRouter from './routes/message.route.js';
 
 dotenv.config();
 
@@ -33,7 +34,7 @@ app.use('/api/user/', userRoutes);
 app.use('/api/post/', postRouter);
 app.use('/api/reel/', reelRouter);
 app.use('/api/story/', storyRouter);
-
+app.use('/api/message/',messageRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
