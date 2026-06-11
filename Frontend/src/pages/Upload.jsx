@@ -10,18 +10,16 @@ import { ClipLoader } from "react-spinners";
 import { IoMdAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { setPostData } from "../redux/postSlice.js";
-import { setStoryData } from "../redux/storySlice.js";
+import { setCurrentUserStory, setStoryData } from "../redux/storySlice.js";
 import { setLoopData } from "../redux/loopSlice.js";
 import { setUserData } from "../redux/userSlice.js";
 
-
 function Upload() {
-
   const dispatch = useDispatch();
   const { postData } = useSelector((state) => state.post);
   const { loopData } = useSelector((state) => state.loop);
   const { storyData } = useSelector((state) => state.story);
-  
+
   const navigate = useNavigate();
   const [uploadType, setUploadType] = useState("post");
   const [frontendMedia, setFrontendMedia] = useState(null);
@@ -55,7 +53,7 @@ function Upload() {
         formData,
         { withCredentials: true },
       );
-      dispatch(setPostData([...postData,result.data]));
+      dispatch(setPostData([...postData, result.data]));
       console.log(result.data);
       setLoading(false);
       navigate("/");
@@ -74,7 +72,7 @@ function Upload() {
         formData,
         { withCredentials: true },
       );
-      setUserData((prev)=>({...prev,story:result.data}));
+      dispatch(setCurrentUserStory(result.data));
       console.log(result.data);
       setLoading(false);
       navigate("/");
@@ -92,7 +90,7 @@ function Upload() {
         formData,
         { withCredentials: true },
       );
-      dispatch(setLoopData([...loopData,result.data]));
+      dispatch(setLoopData([...loopData, result.data]));
       console.log(result.data);
       setLoading(false);
       navigate("/");

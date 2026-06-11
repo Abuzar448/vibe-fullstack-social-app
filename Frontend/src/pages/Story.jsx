@@ -11,6 +11,7 @@
     const dispatch = useDispatch();
     const {storyData} = useSelector(state=>state.story);
     const handleStory = async () => {
+        dispatch(setStoryData(null));
       try {
         const result = await axios.get(
           `http://localhost:8080/api/story/getstoryByUsername/${username}`,
