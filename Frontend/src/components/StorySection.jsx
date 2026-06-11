@@ -16,30 +16,26 @@ const StorySection = ({ storyData }) => {
 
   const viewersCount = storyData?.viewers?.length || 0;
   const isAuthor = storyData?.author?.username === userData?.username;
-
-  // --- SMARTER TIMELINE AUTOPLAY FUNCTIONALITY ---
   useEffect(() => {
-    // Agar viewers modal open hai, toh timeline ko yahi par rok do (Pause state)
     if (showViewers) return;
 
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          navigate("/"); // Story khatam hone par home page par redirect
+          navigate("/"); 
           return 100;
         }
         return prev + 1;
       });
-    }, 60); // Total 6 seconds story duration (60ms * 100)
+    }, 60); 
 
     return () => clearInterval(interval);
-  }, [navigate, showViewers]); // Triggers again whenever showViewers state changes
+  }, [navigate, showViewers]);
 
   return (
     <div className="w-full max-w-[500px] h-screen border-x border-zinc-800 relative flex flex-col justify-between bg-zinc-950 select-none overflow-hidden font-sans">
       
-      {/* Top Segmented Progress Bar */}
       <div className="absolute top-3 left-0 w-full px-3 z-40 flex gap-1">
         <div className="w-full h-[3px] bg-zinc-800 rounded-full overflow-hidden">
           <div
@@ -49,7 +45,6 @@ const StorySection = ({ storyData }) => {
         </div>
       </div>
 
-      {/* Header Section with Smooth Gradient Mask */}
       <div className="w-full flex items-center gap-3 px-4 pt-8 pb-6 absolute top-0 left-0 z-30 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
         <button 
           className="p-1 rounded-full hover:bg-white/10 active:scale-95 transition text-white"
@@ -154,7 +149,6 @@ const StorySection = ({ storyData }) => {
               </button>
             </div>
 
-            {/* Scrollable Viewers List */}
             <div className="w-full overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] flex-1 bg-zinc-900">
               {storyData?.viewers && storyData.viewers.length > 0 ? (
                 storyData.viewers.map((viewer, idx) => (
