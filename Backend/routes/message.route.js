@@ -5,8 +5,8 @@ import { getAllMessages, getPreviousChats, sendMessage } from '../controllers/me
 
 const router = express.Router();
 
-router.post('/send/:receiverId', isAuth, sendMessage);
-router.get('/getAllMessages/:receiverId',isAuth,getAllMessages);
+router.post('/send/:receiverId', isAuth, upload.single('image'), sendMessage);
+router.get('/getAllMessages/:receiverId',isAuth, getAllMessages);
 router.get('/previousChats',isAuth,getPreviousChats);
 
 
