@@ -93,7 +93,7 @@ const MessageArea = () => {
         </div>
       </div>
       {/* div which prints all the messages */}
-      <div className="w-full h-[80%] pt-[130px] pb-[120px] lg:pb-[150px] px-[40px] flex flex-col gap-[50px] overflow-auto bg-black text-white lg:overflow-y-auto overflow-y-scroll [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+      <div className="w-full h-[100%] pt-[130px] pb-[120px] lg:pb-[150px] px-[40px] flex flex-col gap-[50px] overflow-auto bg-black text-white lg:overflow-y-auto overflow-y-scroll [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {messages &&
           messages.map((msg, idx) =>
             msg.sender == userData._id ? (

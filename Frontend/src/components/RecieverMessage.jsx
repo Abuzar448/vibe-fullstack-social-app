@@ -1,15 +1,22 @@
 import React, { memo } from 'react';
 import { useSelector } from "react-redux";
 import dp from "../assets/DP.webp"; 
+import { useRef } from 'react';
+import { useEffect } from 'react';
 
 const RecieverMessage = ({ message }) => {
   const { selectedUser } = useSelector((state) => state.message);
+  const scroll = useRef();
+  useEffect(() => {
+    scroll.current.scrollIntoView({behaviour:'smooth'});
+  }, [message.message,message.image])
+  
 
   if (!message) return null;
 
   return (
     // FIX: Hatayi gayi bekar ki overflow aur scroll classes jo layout ko crash kar rahi thi
-    <div className="flex items-end gap-3 w-full max-w-[75%] md:max-w-[60%] mr-auto mb-4 group">
+    <div ref={scroll} className="flex items-end gap-3 w-full max-w-[75%] md:max-w-[60%] mr-auto mb-4 group">
       
       {/* 1. Avatar */}
       <div className="w-8 h-8 rounded-full cursor-pointer overflow-hidden flex-shrink-0 border border-gray-800 shadow-sm transition-transform hover:scale-105">
