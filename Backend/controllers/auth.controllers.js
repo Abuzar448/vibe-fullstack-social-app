@@ -14,7 +14,7 @@ export const signUp = async (req, res) => {
     if (findByUserName) {
       return res.status(400).json({ message: "UserName already exist !" });
     }
-
+    
     if (password.length < 6) {
       return res
         .status(400)

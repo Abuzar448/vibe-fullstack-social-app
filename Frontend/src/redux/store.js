@@ -3,6 +3,7 @@ import userSlice from './userSlice.js';
 import postSlice from './postSlice.js';
 import loopSlice from './loopSlice.js';
 import storySlice from './storySlice.js';
+import messageSlice from './messageSlice.js';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     post:postSlice,
     loop:loopSlice,
     story:storySlice,
+    message:messageSlice,
   }
 });
 

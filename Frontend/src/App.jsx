@@ -16,6 +16,8 @@ import Reel from './pages/Reel.jsx';
 import getAllReels from './Hooks/getAllReels.jsx';
 import Story from './pages/Story.jsx';
 import getAllStories from './Hooks/getAllStories.jsx';
+import Message from './pages/Message.jsx';
+import MessageArea from './pages/MessageArea.jsx';
 
 const App = () => {
 
@@ -39,6 +41,8 @@ const App = () => {
       <Route path='/upload' element = {userData ? <Upload/> : <Navigate to='/signin'/>}/>
       <Route path='/edit-profile' element = {userData ? <EditProfile/> : <Navigate to='/signin'/>}/>
       <Route path='/reels' element = {userData ? <Reel/> : <Navigate to='/signin'/>}/>
+      <Route path='/messages' element = {userData ? <Message/> : <Navigate to='/signin'/>}/>
+      <Route path='/messageArea' element = {userData ? <MessageArea/> : <Navigate to='/signin'/>}/>
     </Routes>
 
   )

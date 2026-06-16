@@ -8,6 +8,7 @@ import dp from "../assets/DP.webp";
 import Navbar from "../components/Navbar";
 import FollowBtn from "../components/FollowBtn";
 import Post from "../components/Post";
+import { setSelectedUser } from "../redux/messageSlice";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -161,7 +162,10 @@ const Profile = () => {
               targetUserId={profileData?._id}
               onFollowChange={handleProfile}
             ></FollowBtn>
-            <button className="px-[10px] min-w-[150px] py-[5px] h-[40px] bg-[white] cursor-pointer rounded-2xl font-semibold">
+            <button className="px-[10px] min-w-[150px] py-[5px] h-[40px] bg-[white] cursor-pointer rounded-2xl font-semibold" onClick={()=>{
+              dispatch(setSelectedUser(profileData));
+              navigate('/messageArea');
+            }}>
               Message
             </button>
           </>
