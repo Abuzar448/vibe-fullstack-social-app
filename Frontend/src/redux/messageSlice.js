@@ -5,6 +5,7 @@ const messageSlice = createSlice({
   initialState: {
     selectedUser: null,
     messages: [],
+    previousChatUsers:null,
   },
   reducers: {
     setSelectedUser: (state, action) => {
@@ -13,8 +14,11 @@ const messageSlice = createSlice({
     setMessages: (state, action) => {
       state.messages = action.payload;
     },
+    setPreviousChatUsers: (state, action) => {
+      state.previousChatUsers = action.payload;
+    },
   },
 });
 
-export const { setSelectedUser, setMessages } = messageSlice.actions;
+export const { setSelectedUser, setMessages, setPreviousChatUsers } = messageSlice.actions;
 export default messageSlice.reducer;

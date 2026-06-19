@@ -4,7 +4,7 @@ import User from "../models/user.model.js";
 const getCurrentUser = async (req, res) => {
   try {
     const userId = req.user;
-    const user = await User.findById(userId).populate('posts').populate('posts reels posts.author posts.comments saved saved.author');
+    const user = await User.findById(userId).populate('posts').populate('posts reels posts.author posts.comments saved saved.author story following');
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -74,4 +74,14 @@ const getProfile = async (req,res)=>{
   }
 }
 
-export { getCurrentUser, suggestedUsers, editProfile, getProfile };
+const followingList = async (req,res)=>{
+  try {
+    const userId = req.user;
+    const result = await User.findById(userId)
+    return res.status(200).json(result?.following);
+  } catch (error) {
+    return res.status(500).json({message:"Getting following users Error."})
+  }
+}
+
+export { getCurrentUser, suggestedUsers, editProfile, getProfile,followingList };

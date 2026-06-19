@@ -9,7 +9,7 @@ const SenderMessage = ({ message }) => {
   const { userData } = useSelector((state) => state.user);
   const scroll = useRef();
   useEffect(() => {
-    scroll.current.scrollIntoView({behaviour:'smooth'})
+    scroll.current.scrollIntoView({behavior:'smooth'})
   }, [message.message,message.image]);
 
   if (!message) return null;

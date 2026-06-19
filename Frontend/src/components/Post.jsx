@@ -14,6 +14,7 @@ import axios from "axios";
 import { setUserData } from "../redux/userSlice";
 import { GoFoldUp } from "react-icons/go";
 import FollowBtn from "./FollowBtn";
+import { useNavigate } from "react-router-dom";
 
 const Post = ({ post }) => {
   const { userData } = useSelector((state) => state.user);
@@ -22,6 +23,7 @@ const Post = ({ post }) => {
   const [message, setMessage] = useState();
   const [followbtn, setFollowbtn] = useState(false);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLike = async () => {
@@ -76,7 +78,7 @@ const Post = ({ post }) => {
   return (
     <div className="w-[100%] md:w-[100%] flex flex-col gap-[10px] bg-white items-center rounded-2xl pb-10 border-b-1 border-gray-800">
       <div className="w-full h-[80px] flex justify-center items-center px-[25px]">
-        <div className="flex w-[80%] items-center gap-[8px]">
+        <div className="flex w-[80%] items-center gap-[8px] cursor-pointer" onClick={()=>navigate(`/profile/${post?.author?.username}`)}>
           <div className="w-[40px] h-[40px] md:w-[60px] md:h-[60px] rounded-full border-1 border-black cursor-pointer overflow-hidden">
             <img
               src={post.author?.profilePicture || dp}

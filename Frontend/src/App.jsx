@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Routes , Route } from 'react-router-dom';
 import SignIn from './pages/SignIn.jsx';
 import SignUp from './pages/SignUp.jsx';
 import ForgotPassword from './pages/ForgotPassword.jsx';
 import Home from './pages/Home.jsx';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import getCurrentUser from './Hooks/getCurrentUser.jsx';
 import getSuggestedUsers from './Hooks/getSuggestedUsers.jsx';
@@ -18,6 +18,10 @@ import Story from './pages/Story.jsx';
 import getAllStories from './Hooks/getAllStories.jsx';
 import Message from './pages/Message.jsx';
 import MessageArea from './pages/MessageArea.jsx';
+import {io} from 'socket.io-client';
+import { setOnlineusers, setSocket } from './redux/socketSlice.js';
+import getFollowingList from './Hooks/getFollowingList.jsx';
+import getPreviousChatusers from './Hooks/getPreviousChatusers.jsx';
 
 const App = () => {
 
@@ -26,8 +30,36 @@ const App = () => {
   getAllPosts();
   getAllReels();
   getAllStories();
+  getFollowingList();
+  getPreviousChatusers();
 
   const {userData} = useSelector((state)=>state.user);
+  const {socket} = useSelector((state)=>state.socket);
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    if(userData){
+      const socketIo = io('http://localhost:8080',{
+        query:{
+          userId:userData._id
+        }
+      })
+      dispatch(setSocket(socketIo));
+
+      socketIo.on('getOnlineUsers',(users)=>{
+        dispatch(setOnlineusers(users))
+      })
+
+      return ()=>socketIo.close();
+    }    
+    else{
+      if(socket){
+        socket.close()
+        dispatch(setSocket(null));
+      }
+    }
+    
+  },[userData]);
 
     return (
 

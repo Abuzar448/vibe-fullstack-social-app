@@ -8,7 +8,7 @@ const RecieverMessage = ({ message }) => {
   const { selectedUser } = useSelector((state) => state.message);
   const scroll = useRef();
   useEffect(() => {
-    scroll.current.scrollIntoView({behaviour:'smooth'});
+    scroll.current.scrollIntoView({behavior:'smooth'});
   }, [message.message,message.image])
   
 

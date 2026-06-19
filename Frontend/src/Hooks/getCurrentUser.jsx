@@ -13,7 +13,6 @@ const getCurrentUser = () => {
       try { 
         const result = await axios.get('http://localhost:8080/api/user/current', {withCredentials:true});
         dispatch(setUserData(result.data));
-        dispatch(setFollowing(result.data.following));
         dispatch(setCurrentUserStory(result.data.story));
       } catch (error) {
         console.log(error);

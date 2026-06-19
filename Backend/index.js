@@ -9,11 +9,11 @@ import postRouter from './routes/post.route.js';
 import reelRouter from './routes/reel.route.js';
 import storyRouter from './routes/story.routes.js';
 import messageRouter from './routes/message.route.js';
+import { app, server } from './socket.js';
 
 dotenv.config();
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 connectDB();
 
@@ -36,6 +36,6 @@ app.use('/api/reel/', reelRouter);
 app.use('/api/story/', storyRouter);
 app.use('/api/message/',messageRouter);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
