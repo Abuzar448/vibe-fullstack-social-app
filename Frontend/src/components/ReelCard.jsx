@@ -27,6 +27,7 @@ const ReelCard = ({ loop, idx }) => {
   const [showHeart, setShowHeart] = useState(false);
   const { userData } = useSelector((state) => state.user);
   const { loopData } = useSelector((state) => state.loop);
+  const { socket } = useSelector((state) => state.socket);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -115,6 +116,29 @@ const ReelCard = ({ loop, idx }) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    socket?.on("likedLoop", (updatedData) => {
+      const updatedLoops = loopData.map((p) =>
+        p._id == updatedData.reelId ? { ...p, likes: updatedData.likes } : p,
+      );
+      dispatch(setLoopData(updatedLoops));
+    });
+
+    socket?.on("commentedLoop", (updatedData) => {
+      const updatedLoops = loopData.map((p) =>
+        p._id == updatedData.reelId
+          ? { ...p, comments: updatedData.comments }
+          : p,
+      );
+      dispatch(setLoopData(updatedLoops));
+    });
+
+    return () => {
+      socket.off("likedLoop");
+      socket.off("commentedLoop");
+    };
+  }, [socket, loopData, dispatch]);
 
   return (
     <div className="w-full h-full lg:h-[95vh] lg:max-h-[850px] lg:rounded-xl flex items-center justify-center border-zinc-800/80 lg:border relative overflow-hidden bg-black shadow-2xl">
@@ -226,15 +250,18 @@ const ReelCard = ({ loop, idx }) => {
 
       {showComments && (
         <div
-          style={{ animation: 'slideUpCommentsPanel 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards' }}
+          style={{
+            animation:
+              "slideUpCommentsPanel 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards",
+          }}
           className="absolute bottom-0 left-0 w-full bg-gray-900 border-t border-gray-700 rounded-t-2xl p-[10px] h-[80vh] flex flex-col z-50 shadow-2xl overflow-hidden"
         >
           <div
-              className="absolute top-2 left-2 flex items-center justify-center cursor-pointer py-2 sticky top-0 bg-gray-900 z-10 text-gray-400 hover:text-white transition-colors"
-              onClick={() => setShowComments(false)}
-            >
-              <IoCloseSharp size={40} className="font-bold text-left"/>
-            </div>
+            className="absolute top-2 left-2 flex items-center justify-center cursor-pointer py-2 sticky top-0 bg-gray-900 z-10 text-gray-400 hover:text-white transition-colors"
+            onClick={() => setShowComments(false)}
+          >
+            <IoCloseSharp size={40} className="font-bold text-left" />
+          </div>
           {/* Comment Input Section (Fixed Top) */}
           <div className="flex w-full justify-between h-[60px] items-center px-[10px] sm:px-[20px] shrink-0 border-t border-gray-800 absolute fixed bottom-2 left-0 right-0 py-[40px]">
             <div className="w-[35px] h-[35px] md:w-[45px] md:h-[45px] rounded-full border border-gray-600 cursor-pointer overflow-hidden shrink-0">
@@ -255,14 +282,14 @@ const ReelCard = ({ loop, idx }) => {
               onClick={handleComment}
               className="text-blue-500 hover:text-blue-400 transition-colors"
             >
-             {message && <IoSendSharp size={22} className="cursor-pointer" />} 
+              {message && <IoSendSharp size={22} className="cursor-pointer" />}
             </button>
-            
           </div>
 
-          
           <div className="w-full flex-1 flex flex-col overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden mt-2 px-[10px] sm:px-[20px] custom-scrollbar mb-16">
-            <h1 className="font-semibold text-2xl text-white text-center m-5">Comments</h1>
+            <h1 className="font-semibold text-2xl text-white text-center m-5">
+              Comments
+            </h1>
             <div className="flex flex-col gap-4 pb-4">
               {loop?.comments?.length > 0 ? (
                 loop.comments

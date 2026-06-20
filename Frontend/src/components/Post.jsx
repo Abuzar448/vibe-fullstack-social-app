@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import dp from "../assets/DP.webp";
 import VideoPlayer from "./VideoPlayer";
@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 const Post = ({ post }) => {
   const { userData } = useSelector((state) => state.user);
   const { postData } = useSelector((state) => state.post);
+  const { socket } = useSelector((state) => state.socket);
   const [showComments, setShowComments] = useState(false);
   const [message, setMessage] = useState();
   const [followbtn, setFollowbtn] = useState(false);
@@ -73,6 +74,27 @@ const Post = ({ post }) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    socket?.on('likedPost',(updatedData)=>{
+      const updatedPosts = postData.map((p) =>
+        p._id == updatedData.postId ? {...p,likes:updatedData.likes} : p,
+      );
+      dispatch(setPostData(updatedPosts));
+    })
+
+    socket?.on('commentedPost',(updatedData)=>{
+      const updatedPosts = postData.map((p) =>
+        p._id == updatedData.postId ? {...p,comments:updatedData.comments} : p,
+      );
+      dispatch(setPostData(updatedPosts));
+    })
+
+    return ()=>{socket.off('likedPost')
+      socket.off('CommentedPost')
+    } 
+  }, [socket,postData,dispatch]);
+  
 
 
   return (

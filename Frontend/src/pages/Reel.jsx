@@ -2,11 +2,12 @@ import React from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import ReelCard from "../components/ReelCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoopData } from "../redux/loopSlice";
 
 const Reel = () => {
   const navigate = useNavigate();
-  const { loopData } = useSelector((state) => state.loop);
+  const { loopData } = useSelector((state) => state.loop);  
   return (
     <div className="w-screen h-screen bg-black flex justify-center items-center overflow-hidden select-none">
       <div className="w-full max-w-[480px] h-[80px] flex items-center gap-[20px] px-[20px] fixed left-[10px] top-[20px] z-100">

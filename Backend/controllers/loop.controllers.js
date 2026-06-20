@@ -1,6 +1,8 @@
 import uploadOnCloudinary from "../config/cloudinary.js";
 import Reel from "../models/reels.model.js";
 import User from "../models/user.model.js";
+import { io } from "../socket.js";
+
 
 export const uploadLoop = async (req, res) => {
   try {
@@ -82,6 +84,11 @@ export const like = async (req, res) => {
     await reel.save();
     await reel.populate("author", "name username profilePicture");
 
+    io.emit("likedLoop", {
+      reelId: reel._id,
+      likes: reel.likes,
+    });
+
     return res.status(200).json(reel);
   } catch (error) {
     return res
@@ -126,6 +133,11 @@ export const comment = async (req, res) => {
       },
     ]);
 
+    io.emit("commentedLoop", {
+      reelId: reel._id,
+      comments: reel.comments,
+    });
+
     return res.status(201).json(reel);
   } catch (error) {
     return res
@@ -142,10 +154,9 @@ export const allReels = async (req, res) => {
       return res.status(400).json({ message: "User not Found !" });
     }
 
-    const allReels = await Reel.find({}).populate(
-      "author",
-      "name username profilePicture",
-    ).populate('comments.author',"name username profilePicture");
+    const allReels = await Reel.find({})
+      .populate("author", "name username profilePicture")
+      .populate("comments.author", "name username profilePicture");
 
     return res.status(200).json(allReels);
   } catch (error) {
