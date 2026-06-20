@@ -15,6 +15,7 @@ import RecieverMessage from "../components/RecieverMessage";
 const MessageArea = () => {
   const { selectedUser, messages } = useSelector((state) => state.message);
   const { userData } = useSelector((state) => state.user);
+  const { socket } = useSelector((state) => state.socket);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -64,6 +65,14 @@ const MessageArea = () => {
   useEffect(() => {
     getAllMessages();
   }, []);
+
+  useEffect(() => {
+    socket?.on('newMessage',(msg)=>{
+      dispatch(setMessages([...messages,msg]))
+    })
+    return ()=>socket?.off('newMessage');
+  }, [messages,setMessages])
+  
 
   return (
     <div className="w-full bg-black h-[100vh] relative">

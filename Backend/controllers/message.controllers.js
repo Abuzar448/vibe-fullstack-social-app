@@ -1,6 +1,7 @@
 import uploadOnCloudinary from "../config/cloudinary.js";
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
+import { getSocketId,io } from "../socket.js";
 
 export const sendMessage = async (req, res) => {
   try {
@@ -32,29 +33,37 @@ export const sendMessage = async (req, res) => {
       conversation.messages.push(newMessage._id);
       await conversation.save();
     }
+    const receiverSocketId = getSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
+
     return res.status(200).json(newMessage);
   } catch (error) {
-    return res.status(500).json({ message: `send message error ${error.message}` });
+    return res
+      .status(500)
+      .json({ message: `send message error ${error.message}` });
   }
 };
 
-export const getAllMessages = async(req,res)=>{
+export const getAllMessages = async (req, res) => {
   try {
     const senderId = req.user;
     const receiverId = req.params.receiverId;
     let conversation = await Conversation.findOne({
       participants: { $all: [senderId, receiverId] },
-    }).populate('messages');
+    }).populate("messages");
     if (!conversation) {
       return res.status(200).json([]);
     }
 
     return res.status(200).json(conversation.messages);
-
   } catch (error) {
-    return res.status(500).json({message:`Error in getting all messages ${error.message}`});
+    return res
+      .status(500)
+      .json({ message: `Error in getting all messages ${error.message}` });
   }
-}
+};
 
 export const getPreviousChats = async (req, res) => {
   try {
@@ -63,7 +72,7 @@ export const getPreviousChats = async (req, res) => {
     const conversations = await Conversation.find({
       participants: currentUserId,
     })
-      .populate("participants", "username profilePicture") 
+      .populate("participants", "username profilePicture")
       .sort({ updatedAt: -1 });
 
     const userMap = {};
@@ -77,10 +86,13 @@ export const getPreviousChats = async (req, res) => {
     });
 
     const previousUsers = Object.values(userMap);
-    
-    return res.status(200).json(previousUsers);
 
+    return res.status(200).json(previousUsers);
   } catch (error) {
-    return res.status(500).json({ message: `Error in getting previous chat messages: ${error.message}` });
+    return res
+      .status(500)
+      .json({
+        message: `Error in getting previous chat messages: ${error.message}`,
+      });
   }
 };
