@@ -19,7 +19,7 @@ const Navbar = () => {
       <div className="w-[25px] h-[25px] cursor-pointer" onClick={() => navigate('/')}>
         <MdHome color="white" className="w-full h-full" />
       </div>
-      <div className="w-[25px] h-[25px] cursor-pointer">
+      <div className="w-[25px] h-[25px] cursor-pointer" onClick={() => navigate('/search')}>
         <IoMdSearch color="white" className="w-full h-full" />
       </div>
       <div onClick={()=>navigate('/upload')} className="w-[30px] h-[30px] cursor-pointer">

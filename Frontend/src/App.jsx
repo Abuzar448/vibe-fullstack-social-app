@@ -22,6 +22,7 @@ import {io} from 'socket.io-client';
 import { setOnlineusers, setSocket } from './redux/socketSlice.js';
 import getFollowingList from './Hooks/getFollowingList.jsx';
 import getPreviousChatusers from './Hooks/getPreviousChatusers.jsx';
+import Search from './pages/Search.jsx';
 
 const App = () => {
 
@@ -75,6 +76,7 @@ const App = () => {
       <Route path='/reels' element = {userData ? <Reel/> : <Navigate to='/signin'/>}/>
       <Route path='/messages' element = {userData ? <Message/> : <Navigate to='/signin'/>}/>
       <Route path='/messageArea' element = {userData ? <MessageArea/> : <Navigate to='/signin'/>}/>
+      <Route path='/search' element = {userData ? <Search/> : <Navigate to='/signin'/>}/>
     </Routes>
 
   )
