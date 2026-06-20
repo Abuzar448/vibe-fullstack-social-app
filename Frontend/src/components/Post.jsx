@@ -68,7 +68,6 @@ const Post = ({ post }) => {
         `http://localhost:8080/api/post/save-post/${post._id}`,
         { withCredentials: true },
       );
-      console.log(result.data);
       dispatch(setUserData(result.data));
     } catch (error) {
       console.log(error);

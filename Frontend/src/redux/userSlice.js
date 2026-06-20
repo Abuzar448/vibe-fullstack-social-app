@@ -28,9 +28,9 @@ const userSlice = createSlice({
       }else{
         state.following.push(targetUserId);
       }
-    }
+    },
   }
 });
 
-export const { setUserData,setSuggestedUsers,setprofileData,toggleFollow,setFollowing } = userSlice.actions;
+export const { setUserData,setSuggestedUsers,setprofileData,toggleFollow,setFollowing,setSavedPosts } = userSlice.actions;
 export default userSlice.reducer;

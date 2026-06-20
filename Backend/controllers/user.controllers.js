@@ -4,7 +4,7 @@ import User from "../models/user.model.js";
 const getCurrentUser = async (req, res) => {
   try {
     const userId = req.user;
-    const user = await User.findById(userId).populate('posts').populate('posts reels posts.author posts.comments saved saved.author story following');
+    const user = await User.findById(userId).populate('posts').populate('posts reels posts.author posts.comments story following');
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -63,7 +63,7 @@ const editProfile = async (req, res) => {
 const getProfile = async (req,res)=>{
   try {
     const username = req.params.username;
-    const user = await User.findOne({username}).select('-password').populate('posts reels followers following saved saved.author');
+    const user = await User.findOne({username}).select('-password').populate('posts reels followers following');
     if(!user){
       return res.status(400).json({message:'User Not Found'})
     }
