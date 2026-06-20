@@ -18,7 +18,6 @@ const getCurrentUser = () => {
         console.log(error);
       }
     }
-    // Logic to get the current user
     fetchUser();
   }, [storyData])
 }

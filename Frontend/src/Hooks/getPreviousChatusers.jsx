@@ -8,7 +8,7 @@ import { setPreviousChatUsers } from '../redux/messageSlice'
 
 const getPreviousChatusers = () => {
   const dispatch = useDispatch();
-  const {messages} = useSelector((state)=>state.message);
+  const {userData} = useSelector((state)=>state.user);
   useEffect(() => {
     const fetchUser = async ()=>{
       try { 
@@ -19,7 +19,7 @@ const getPreviousChatusers = () => {
       }
     }
     fetchUser();
-  }, [messages])
+  }, [userData])
 }
 
 export default getPreviousChatusers;

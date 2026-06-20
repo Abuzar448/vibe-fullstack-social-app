@@ -178,14 +178,14 @@ const Profile = () => {
           {userData?._id == profileData?._id && (
             <div className="w-[90%] max-w-[600px] h-[80px] bg-[white] rounded-full flex justify-around items-center gap-[10px]">
               <div
-                className={`${postType == "posts" ? "bg-black text-white shadow-2xl shadow-black" : ""}  w-[28%] h-[80%] flex justify-center items-center text-[19px] font-semibold cursor-pointer rounded-full`}
+                className={`${postType == "posts" ? "bg-black text-white" : ""}  w-[28%] h-[80%] flex justify-center items-center text-[19px] font-semibold cursor-pointer rounded-full hover:border-1 hover:border-gray-700`}
                 onClick={() => setPostType("posts")}
               >
                 Posts
               </div>
 
               <div
-                className={`${postType == "saved" ? "bg-black text-white shadow-2xl shadow-black" : ""}  w-[28%] h-[80%] flex justify-center items-center text-[19px] font-semibold cursor-pointer rounded-full`}
+                className={`${postType == "saved" ? "bg-black text-white" : ""}  w-[28%] h-[80%] flex justify-center items-center text-[19px] font-semibold cursor-pointer rounded-full hover:border-1 hover:border-gray-700`}
                 onClick={() => setPostType("saved")}
               >
                 Saved
